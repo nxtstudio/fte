@@ -11,20 +11,7 @@ namespace FTE.Hiring.Models
         public string Title { get; set; }
 
         public List<Question> Questions { get; set; }
-        public List<PropertyValue> Values { get; set; }
-    }
 
-    public class PropertyValue
-    {
-        public Guid Id { get; set; }
-        public Property Property { get; set; }
-        public object Value { get; set; }
-    }
-
-    public class Question
-    {
-        public Guid Id { get; set; }
-        public string QuestionText { get; set; }
-        public string Anwser { get; set; }
+        public List<ApplicantProcessStep> ProcessSteps { get; set; }
     }
 }

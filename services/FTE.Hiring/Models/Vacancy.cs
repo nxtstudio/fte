@@ -9,5 +9,7 @@ namespace FTE.Hiring.Models
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
+        
+        public Guid ProcessId { get; set; }
     }
 }

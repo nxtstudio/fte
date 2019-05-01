@@ -1,47 +1,44 @@
-﻿using System;
+﻿using FTE.Hiring.Models;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FTE.Hiring.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace FTE.Hiring.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VacancyController : ControllerBase
+    public class UserController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<IEnumerable<Vacancy>> Get()
+        public ActionResult<IEnumerable<User>> Get()
         {
-            return new List<Vacancy>
-            {
-                FakeData.Vacancy
-            };
+            return new List<User>();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Vacancy> Get(int Guid)
+        public ActionResult<User> Get(Guid id)
         {
-            return FakeData.Vacancy;
+            return new User();
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] Vacancy value)
+        public ActionResult Post([FromBody] User value)
         {
             return Ok();
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Vacancy value)
+        public ActionResult Put(Guid id, [FromBody] User value)
         {
             return Ok();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             return Ok();
         }
