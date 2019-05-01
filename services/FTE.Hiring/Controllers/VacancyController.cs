@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FTE.Hiring.Models;
+using FTE.Hiring.Models.Converters;
+using FTE.Hiring.Repos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FTE.Hiring.Controllers
@@ -11,39 +13,48 @@ namespace FTE.Hiring.Controllers
     [ApiController]
     public class VacancyController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<IEnumerable<Vacancy>> Get()
+        private readonly IVacancyRepository _vacancyRepository;
+
+        public VacancyController(IVacancyRepository vacancyRepository)
         {
-            return new List<Vacancy>
-            {
-                FakeData.Vacancy
-            };
+            _vacancyRepository = vacancyRepository;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Vacancy>>> GetAsync()
+        {
+            var result = await _vacancyRepository.GetAllVacanciesAsync();
+            return Ok(result.Select(VacancyConverters.Convert).ToList());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Vacancy> Get(int Guid)
+        public async Task<ActionResult<Vacancy>> GetAsync(Guid id)
         {
-            return FakeData.Vacancy;
+            var result = await _vacancyRepository.GetVacancyByIdAsync(id);
+            return Ok(VacancyConverters.Convert(result));
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] Vacancy value)
+        public async Task<ActionResult> PostAsync([FromBody] Vacancy value)
         {
-            return Ok();
+            var result = await _vacancyRepository.CreateVacancyAsync(VacancyConverters.Convert(value));
+            return CreatedAtAction(nameof(GetAsync), new { id = result.Id }, result);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Vacancy value)
+        public async Task<ActionResult> PutAsync(Guid id, [FromBody] Vacancy value)
         {
-            return Ok();
+            var result = await _vacancyRepository.UpdateVacancyAsync(VacancyConverters.Convert(value));
+            return Ok(result);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> DeleteAsync(Guid id)
         {
-            return Ok();
+            var result = await _vacancyRepository.DeleteVacancyByIdAsync(id);
+            return Ok(result);
         }
     }
 }

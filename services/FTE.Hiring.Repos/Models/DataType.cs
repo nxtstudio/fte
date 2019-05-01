@@ -1,4 +1,4 @@
-﻿namespace FTE.Hiring.Models
+﻿namespace FTE.Hiring.Repos.Models
 {
     public enum DataType
     {

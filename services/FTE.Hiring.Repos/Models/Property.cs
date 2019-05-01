@@ -1,8 +1,7 @@
-﻿using FTE.Hiring.Repos.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace FTE.Hiring.Models
+namespace FTE.Hiring.Repos.Models
 {
     public class Property
     {
